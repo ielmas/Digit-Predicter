@@ -30,17 +30,25 @@ class main:
 #    trainer.loadDataset()
 #    trainer.Train()
 #    trainer.Predict()
-    i = 28
+#    i = 28
     dataset = sio.loadmat(path)
     X = dataset['X']
     y = dataset['y']
+    print(X[150])
+#    predicter = Predicter()
+#    predicter.loadModel()
+#    sample = X[i]
+##    print(sample.shape)
+##    sample = np.transpose(sample)
+##    print(sample.shape)
+#    predicter.predict(sample)
+#    print(y[i])
     predicter = Predicter()
     predicter.loadModel()
-    sample = X[i]
-#    print(sample.shape)
-#    sample = np.transpose(sample)
-#    print(sample.shape)
-    predicter.predict(sample)
-    print(y[i])
-    
+    matrix = predicter.loadImage()
+    X = np.zeros((400, 1))
+    for i in range(20):
+        for j in range(20):
+            X[20*i+j][0] = matrix[j][i]
+    predicter.predict(X)
     
