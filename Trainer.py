@@ -18,18 +18,23 @@ class Trainer:
     def Sigmoid(self, h):
         return 1 / (1 + np.exp(-h))
         
-    def costFunction(X, y, theta):
+    def costFunction(self, X, y, theta, lambd):
         numrow = X.shape[0]         #number of rows
         ones = np.ones(numrow)
-        X = np.c_[ones, X]          #now we have correct X matrix
-        length = X.shape[1]         #number of columns
+        X = np.c_[ones, X]          #now we have correct X matrix 
         hypthesis = X.dot(theta)
-        hypthesis = Sigmoid(hypthesis)
-        term1 = np.multiply(y, log(hypthesis))
-        term2 = np.multiply(1-y , log(1-hypthesis))
+        hypthesis = self.Sigmoid(hypthesis)
+        term1 = np.multiply(y, np.log(hypthesis))
+        term2 = np.multiply(1-y , np.log(1-hypthesis))
         term1 = np.sum(term1)
         term2 = np.sum(term2)
-        return term1 + term2
+        reg_theta = theta
+        reg_theta[0] = 0
+        term3 = np.transpose(reg_theta).dot(reg_theta)
+        term3 = lambd*term3/2
+        sum = term1 + term2 - term3
+#        cost = (-1/numrow)(term1 + term2 - term3)
+        return sum
         
 #    def Gradient():
         

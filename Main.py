@@ -7,20 +7,27 @@ debugging.
 """
 import numpy as np
 from Trainer import Trainer
-
+import scipy.io as sio
 class main:
     
     path = 'sampleDatabase.mat'
-    dataset = sio.loadmat(path)
-    X = dataset.contents['X']
-    y = dataset.contents['y']
-    a =(np.arange(9) +1).reshape((3,3))
-    c = np.array([[-2], [-2], [-2]])
-    b = np.array([[2], [2], [2]])
-    print(np.sum(a, 0))
+#    dataset = sio.loadmat(path)
+#    X = dataset['X']
+#    y = dataset['y']
+    a =((np.arange(15) +1).reshape((3,5)))/10
+    a = np.transpose(a)
+#    ones= np.ones(5)
+#    a = np.c_[ones, a]
+    y = np.array([[1],[0], [1],[0] , [1]])
+    lambd = 3
+    theta = np.array([[-2], [-1], [1], [2]])
+    trainer = Trainer(path)
+    print(trainer.costFunction(a, y, theta, lambd))
+#    print(np.sum(a, 0))
 #    print(np.multiply(1-b,np.log(1-a)))
 #    print(a)
-    trainer = Trainer(path)
+#    
+#     print(trainer.costFunction(X,y))
 #    trainer.loadDataset()
 #    trainer.costFunction()
     
