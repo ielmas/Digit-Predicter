@@ -16,17 +16,18 @@ class Trainer:
         self.dataset = sio.loadmat(self.path)
         
 
-    def costFunction(self):
-        X = self.dataset['X']
-        y = self.dataset['y']
+    def costFunction(X, y):
         numrow = X.shape[0]         #number of rows
         ones = np.ones(numrow)
         X = np.c_[ones, X]          #now we have correct X matrix
         length = X.shape[1]         #number of columns
         init_theta = np.zeros(length) 
         
+    def Gradient():
         
 
     def printDataset(self):
         print(self.dataset)
         print(sorted(self.dataset.keys()))
+        
+    def Train():

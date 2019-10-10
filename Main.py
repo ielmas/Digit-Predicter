@@ -13,5 +13,4 @@ class main:
     path = 'sampleDatabase.mat'
     trainer = Trainer(path)
     trainer.loadDataset()
-    trainer.printDataset()
     trainer.costFunction()
