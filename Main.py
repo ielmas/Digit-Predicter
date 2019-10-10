@@ -14,3 +14,4 @@ class main:
     trainer = Trainer(path)
     trainer.loadDataset()
     trainer.printDataset()
+    trainer.costFunction()
