@@ -10,8 +10,11 @@ import scipy.io as sio
 
 class Trainer:
     def __init__(self, path):
-        self.path = path;
+        self.path = path
     
-    def loadDataset():
-        mat = sio.loadmat('file.mat')
+    def loadDataset(self):
+        self.dataset = sio.loadmat(self.path)
+        
+    def printDataset(self):
+        print(self.dataset)
         
