@@ -13,16 +13,19 @@ import scipy.optimize as opt
 
 
 class Trainer:
-    
+    ## "path" : path of the dataset
     def __init__(self, path):
         self.path = path
-    
+        
+    ##loads the dataset, makes it ready to use
     def loadDataset(self):
         self.dataset = sio.loadmat(self.path)
         
+    ##sigmoid function to calculate hypothesis
     def Sigmoid(self, h):
         return 1 / (1 + np.exp(-h))
         
+    ##calculates the cost function and returns it (With regularization)
     def costFunction(self, theta, X, y, lambd):
         numrow = X.shape[0]         #number of rows
         hypthesis = X.dot(theta)
@@ -39,6 +42,7 @@ class Trainer:
         cost = sum/numrow
         return -cost
         
+    ##calculates the gradient and returns it (With regularization)
     def Gradient(self, theta, X, y, lambd):
         numrow = X.shape[0]         #number of rows
         hypthesis = X.dot(theta)
@@ -53,12 +57,12 @@ class Trainer:
         grad = sum/numrow
         return grad
 
-
+    ##just prints it
     def printDataset(self):
         print(self.dataset)
         print(sorted(self.dataset.keys()))
         
-
+    ## here we start to train the model
     def Train(self):
         X = self.dataset['X']
         numrow = X.shape[0]         #number of rows
@@ -69,6 +73,8 @@ class Trainer:
         numberLabels = 10 # since there are 10 digits
         self.all_thetas = np.zeros((numberLabels, features))
         lambd = 0.1
+        
+        ## we train 10 different models for each each digit
         for x in range(10):
             init_theta = np.zeros(features)
             condtn = x
@@ -79,7 +85,7 @@ class Trainer:
             self.all_thetas[x] = output[0]
         np.savetxt("thetaValues.csv", self.all_thetas, delimiter=",")
         
-        
+    ## just to measure the accuracy of the model. (it was %96)
     def Predict(self):
         X = self.dataset['X']
         numrow = X.shape[0]         #number of rows
@@ -91,7 +97,6 @@ class Trainer:
         indices = np.transpose(np.argmax(probs, 1))
         real_indices = np.where(indices == 0, 10, indices)
         value = 0
-        
         for x in range(numrow):
             if(real_indices[x] == y[x]):
                 value = value+ 1

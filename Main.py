@@ -42,11 +42,13 @@ class main:
     matrix = predicter.loadImage(pathOfImage)
     
     ## you have to convert X to 1 to 400 dimensions.(predict fucntions is so arranged)
-    X = np.zeros((400, 1))
+    ##` the reason why is 400. Because i used a 20x20 dataset. But if you want, you can use
+    ## however you want. But you need to change functions a little bit.
+    X = np.zeros((1, 400))
     for i in range(20):
         for j in range(20):
             X[20*i+j][0] = matrix[j][i]
-            
+    
     prediction = predicter.predict(X)
     print(prediction)
     
