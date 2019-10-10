@@ -72,7 +72,7 @@ class Trainer:
             init_theta = np.zeros(features)
             condtn = x
             if (x == 0):
-                condtn == 10
+                condtn = 10
             output = opt.fmin_tnc(func = self.costFunction, x0 = init_theta.flatten(), fprime = self.Gradient, \
                          args = (X, (y == condtn).flatten(), lambd))
             self.all_thetas[x] = output[0]
