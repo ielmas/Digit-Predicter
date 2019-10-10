@@ -23,6 +23,8 @@ class main:
     theta = np.array([[-2], [-1], [1], [2]])
     trainer = Trainer(path)
     print(trainer.costFunction(a, y, theta, lambd))
+    print('\n---------------------------\n')
+    print(trainer.Gradient(a, y, theta, lambd))
 #    print(np.sum(a, 0))
 #    print(np.multiply(1-b,np.log(1-a)))
 #    print(a)
