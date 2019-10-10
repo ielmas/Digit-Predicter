@@ -77,6 +77,7 @@ class Trainer:
                          args = (X, (y == condtn).flatten(), lambd))
             self.all_thetas[x] = output[0]
             print(self.all_thetas[x])
+        np.savetxt("thetaValues.csv", self.all_thetas, delimiter=",")
     def Predict(self):
         X = self.dataset['X']
         numrow = X.shape[0]         #number of rows
@@ -86,6 +87,14 @@ class Trainer:
         theta_tra = np.transpose(self.all_thetas)
         probs = X.dot(theta_tra)
         indices = np.transpose(np.argmax(probs, 1))
-        print(indices)
-#        
+        real_indices = np.where(indices == 0, 10, indices)
+        value = 0
+        for x in range(5000):
+            if(real_indices[x] == y[x]):
+                value = value+ 1
+        print(value)
+#        print(real_indices)
+#        print(y.shape)
+#        total = np.equal(y, real_indices)
+#        print(total.shape)
         
