@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 """
 Created on Thu Oct 10 07:58:00 2019
+
 Description: Main class that uses both Trainer and Predicter class for 
 debugging.
-@author: OrduLou
+
+@author: Ibrahim Elmas
 """
 import numpy as np
 from Trainer import Trainer
@@ -11,44 +13,40 @@ from Predicter import Predicter
 import scipy.io as sio
 class main:
     
-    path = 'sampleDatabase.mat'
-    ### these comments were used to test function of Trainer class.
-#    dataset = sio.loadmat(path)
-#    X = dataset['X']
-#    y = dataset['y']
-#    a =((np.arange(15) +1).reshape((3,5)))/10
-#    a = np.transpose(a)
-#    ones= np.ones(5)
-#    a = np.c_[ones, a]
-#    y =     np.array([[1], [2], [1], [2], [1]])
-#    lambd = 3
-#    theta = np.array([[1], [3], [1], [5], [6]])
-#    deneme = np.array([1])
-#    print(theta[2][0])
-#    print(np.vstack([deneme, y]))
-#    trainer = Trainer(path)
-#    trainer.loadDataset()
-#    trainer.Train()
-#    trainer.Predict()
-#    i = 28
+    path = 'sampleDatabase.mat' ## this is the dataset file that you want to train with.
+    
+    
+    ##### TRAINING PART
+    trainer = Trainer(path)     ## this path is parameter to the constructor
+    trainer.loadDataset() 
+    trainer.Train()
+    trainer.Predict()
+    
+    ### getting dataset to predict
     dataset = sio.loadmat(path)
     X = dataset['X']
     y = dataset['y']
-    print(X[150])
-#    predicter = Predicter()
-#    predicter.loadModel()
-#    sample = X[i]
-##    print(sample.shape)
-##    sample = np.transpose(sample)
-##    print(sample.shape)
-#    predicter.predict(sample)
-#    print(y[i])
+    
+    #### the saved model is uploaded to predictor class.(Training o,automatically saves models to this file)
+    pathOfModel = 'thetaValues.csv'
+    
+    #### the predictor class is able to use model now
     predicter = Predicter()
-    predicter.loadModel()
-    matrix = predicter.loadImage()
+    predicter.loadModel(pathOfModel)
+    
+    #### any image to predict (of course it has to be digit :D)
+    pathOfImage = 'sample.jpg'
+    
+    ### laod image function returns the array representation of the image,
+    ### so that you can put in predic function
+    matrix = predicter.loadImage(pathOfImage)
+    
+    ## you have to convert X to 1 to 400 dimensions.(predict fucntions is so arranged)
     X = np.zeros((400, 1))
     for i in range(20):
         for j in range(20):
             X[20*i+j][0] = matrix[j][i]
-    predicter.predict(X)
+            
+    prediction = predicter.predict(X)
+    print(prediction)
     

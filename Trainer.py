@@ -2,13 +2,18 @@
 """
 Created on Thu Oct 10 07:41:15 2019
 
-@author: OrduLou
+Description: Trainer class of the model.
+
+@author: Ibrahim Elmas
 """
 
 import numpy as np
 import scipy.io as sio
 import scipy.optimize as opt
+
+
 class Trainer:
+    
     def __init__(self, path):
         self.path = path
     
@@ -20,8 +25,6 @@ class Trainer:
         
     def costFunction(self, theta, X, y, lambd):
         numrow = X.shape[0]         #number of rows
-#        ones = np.ones(numrow)
-#        X = np.c_[ones, X]          #now we have correct X matrix 
         hypthesis = X.dot(theta)
         hypthesis = self.Sigmoid(hypthesis)
         term1 = np.multiply(y, np.log(hypthesis))
@@ -38,8 +41,6 @@ class Trainer:
         
     def Gradient(self, theta, X, y, lambd):
         numrow = X.shape[0]         #number of rows
-#        ones = np.ones(numrow)
-#        X = np.c_[ones, X]          #now we have correct X matrix 
         hypthesis = X.dot(theta)
         hypthesis = self.Sigmoid(hypthesis)
         grad_term1_sub = hypthesis- y
@@ -51,6 +52,7 @@ class Trainer:
         sum = grad_term1  + grad_term2
         grad = sum/numrow
         return grad
+
 
     def printDataset(self):
         print(self.dataset)
@@ -68,7 +70,6 @@ class Trainer:
         self.all_thetas = np.zeros((numberLabels, features))
         lambd = 0.1
         for x in range(10):
-            print('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
             init_theta = np.zeros(features)
             condtn = x
             if (x == 0):
@@ -76,8 +77,9 @@ class Trainer:
             output = opt.fmin_tnc(func = self.costFunction, x0 = init_theta.flatten(), fprime = self.Gradient, \
                          args = (X, (y == condtn).flatten(), lambd))
             self.all_thetas[x] = output[0]
-            print(self.all_thetas[x])
         np.savetxt("thetaValues.csv", self.all_thetas, delimiter=",")
+        
+        
     def Predict(self):
         X = self.dataset['X']
         numrow = X.shape[0]         #number of rows
@@ -89,12 +91,9 @@ class Trainer:
         indices = np.transpose(np.argmax(probs, 1))
         real_indices = np.where(indices == 0, 10, indices)
         value = 0
-        for x in range(5000):
+        
+        for x in range(numrow):
             if(real_indices[x] == y[x]):
                 value = value+ 1
         print(value)
-#        print(real_indices)
-#        print(y.shape)
-#        total = np.equal(y, real_indices)
-#        print(total.shape)
         
